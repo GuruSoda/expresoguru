@@ -66,7 +66,7 @@ Testing/
 src/build/*
 !vs2010/*.sln
 !vs2010/*.user
-!vs2010/*vcxproj
+!vs2010/*.vcxproj
 !vs2015/*.sln
 !vs2015/*.user
-!vs2015/*vcxproj
+!vs2015/*.vcxproj
