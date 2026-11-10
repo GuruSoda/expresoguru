@@ -38,11 +38,6 @@
 *.out
 *.app
 
-# Build directories
-build/
-Build/
-build-*/
-
 # CMake generated files
 CMakeFiles/
 CMakeCache.txt
@@ -66,3 +61,13 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Propios
+
+build/*
+!vs2010/*.sln
+!vs2010/*.user
+!vs2010/*vcxproj
+!vs2015/*.sln
+!vs2015/*.user
+!vs2015/*vcxproj
