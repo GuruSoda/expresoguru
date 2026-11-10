@@ -1,0 +1,85 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:		ExpresoGuru
+# Required-Start:	$local_fs $remote_fs 
+# Required-Stop:	$local_fs $remote_fs
+# Default-Start:	2 3 4 5
+# Default-Stop:
+# Short-Description: 	Inicia o Deteniene el Expreso Guru
+# Description:		Expreso Guru, una VPN Argentina
+### END INIT INFO
+
+NOMBRE=ExpresoGuru
+EJECUTABLE=expreso
+HOME=/opt/ExpresoGuru/bin
+PARAMETROS=
+PIDFILE=/var/run/ExpresoGuru.pid
+MSG_CORRIENDO="El Expreso Guru ya se encuentra corriendo."
+
+. /lib/lsb/init-functions
+
+start() {
+	if [ -f $PIDFILE ];then
+		PID=`cat $PIDFILE`
+		if [ "$PID" != ""  ];then
+			REGPROG=`ps -eO pid | grep -v grep | grep $PID`
+			if [ "$REGPROG" != "" ];then
+				echo $MSG_CORRIENDO
+				return 1;
+			fi
+		fi
+	fi
+
+	cd $HOME
+
+	if [ -f environment ]; then
+		. environment
+	fi
+
+	$HOME/$EJECUTABLE $PARAMETROS 
+
+	if [ $? -ne 0 ]
+	then
+		echo "El Expreso Guru ha retornado un codigo de error."
+	fi
+}
+
+stop() {
+	if [ -f $PIDFILE ];then
+		PID=`cat $PIDFILE`
+
+		if [ "$PID" != "" ]
+		then
+			kill $PID
+			rm -f $PIDFILE
+		else
+			echo "El demonio no se encuentra ejecutandose o no tiene un pid asociado."
+		fi
+	else
+		echo "El demonio no se encuentra ejecutandose o no tiene un pid asociado."
+	fi
+}
+
+restart(){
+        stop
+        start
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        restart
+        ;;
+  *)
+        echo "Uso: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit 0
+
