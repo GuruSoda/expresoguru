@@ -61,12 +61,9 @@ vcpkg_installed/
 Testing/
 .cache/
 
-# Propios
-
-src/build/*
-!vs2010/*.sln
-!vs2010/*.user
-!vs2010/*.vcxproj
-!vs2015/*.sln
-!vs2015/*.user
-!vs2015/*.vcxproj
+# cache de compilacion
+src/build/*/*
+!*.filters
+!*.sln
+!*.user
+!*.vcxproj
